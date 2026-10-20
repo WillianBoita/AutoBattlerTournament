@@ -10,8 +10,8 @@ Map::Map() {
   this->width = max_width;
 }
 
-void Map::addTeam(int teamId, int budget, std::vector<std::unique_ptr<Unit>> units) {
-  std::unique_ptr<Team> newTeam = std::make_unique<Team>(teamId, budget);
+void Map::addTeam(int budget, std::vector<std::unique_ptr<Unit>> units) {
+  std::unique_ptr<Team> newTeam = std::make_unique<Team>(budget);
   for (int i = 0; i < units.size(); i++) {
     newTeam->addUnit(std::move(units.at(i)));
   }
@@ -32,9 +32,11 @@ void Map::renderMap() {
 
 const std::vector<std::unique_ptr<Team>>& Map::getTeams() const {
   for (int i = 0; i < this->teams.size(); i++) {
-    std::cout << this->teams.at(i).get()->getId() << "\n";
-    std::cout << this->teams.at(i).get()->getBudget() << "\n";
-    this->teams.at(i).get()->getUnits();
+    Team* team = this->teams.at(i).get();
+    
+    std::cout << "Team ID: " << team->getId() << "\n";
+    std::cout << "Team Budget: " << team->getBudget() << "\n";
+    team->getUnits();
     std::cout << "-------------------\n";
   }
   

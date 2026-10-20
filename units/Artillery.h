@@ -6,7 +6,7 @@
 
 class Artillery : public Unit {
   public:
-    Artillery(int id);
+    Artillery();
 };
 
 #endif

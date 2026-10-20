@@ -19,6 +19,7 @@ enum class Direction {
 
 class Unit {
   private:
+    inline static int counter = 0;
     int id;
     int health;
     int damage;
@@ -28,7 +29,7 @@ class Unit {
   protected:
     Position position;
   public:
-    Unit(int id, int health, int damage, int speed, int range, int price);
+    Unit(int health, int damage, int speed, int range, int price);
 
     int getId() const;
     int getHealth() const;

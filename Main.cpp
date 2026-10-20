@@ -14,17 +14,14 @@ int main() {
   std::vector<std::unique_ptr<Unit>> units;
   std::vector<std::unique_ptr<Unit>> units2;
   for (int i = 0; i < 4; i++) {
-    std::unique_ptr<Tank> unit = std::make_unique<Tank>(i);
+    std::unique_ptr<Tank> unit = std::make_unique<Tank>();
     units.push_back(std::move(unit)); 
-  }
-
-  for (int i = 0; i < 4; i++) {
-    std::unique_ptr<Artillery> unit2 = std::make_unique<Artillery>(i);
+    std::unique_ptr<Artillery> unit2 = std::make_unique<Artillery>();
     units2.push_back(std::move(unit2)); 
   }
   
-  mapa->addTeam(1, 200, std::move(units));
-  mapa->addTeam(2, 200, std::move(units2));
+  mapa->addTeam(200, std::move(units));
+  mapa->addTeam(200, std::move(units2));
 
   mapa->getTeams();
 

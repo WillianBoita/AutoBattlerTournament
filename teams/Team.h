@@ -8,12 +8,12 @@
 
 class Team {
   private:
+    inline static int counter = 0;
     int id;
     int budget;
     std::vector<std::unique_ptr<Unit>> units;
-
   public:
-    Team(int id, int budget);
+    Team(int budget);
     void addUnit(std::unique_ptr<Unit> newUnit);
 
     int getId();

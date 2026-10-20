@@ -4,8 +4,8 @@
 #include "../units/Unit.h"
 #include "Team.h"
 
-Team::Team(int id, int budget) {
-  this->id = id;
+Team::Team(int budget) {
+  this->id = this->counter++;
   this->budget = budget;
 }
 
@@ -24,9 +24,11 @@ int Team::getBudget() {
 const std::vector<std::unique_ptr<Unit>>& Team::getUnits() const {
   std::cout << "Units: \n";
   for (int i = 0; i < this->units.size(); i++) {
-    std::cout << this->units.at(i).get()->getId() << "\n";
-    std::cout << this->units.at(i).get()->getHealth() << "\n";
-    std::cout << this->units.at(i).get()->getDamage() << "\n";
+    Unit* unit = this->units.at(i).get();
+    
+    std::cout << "Unit ID: " << unit->getId() << "\n";
+    std::cout << "Unit Health: " << unit->getHealth() << "\n";
+    std::cout << "Unit Damage: " << unit->getDamage() << "\n";
   }
   return this->units;
 }

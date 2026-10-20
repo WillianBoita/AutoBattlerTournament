@@ -19,7 +19,7 @@ class Map {
     Map();
 
     void renderMap();
-    void addTeam(int teamId, int budget, std::vector<std::unique_ptr<Unit>> units);
+    void addTeam(int budget, std::vector<std::unique_ptr<Unit>> units);
 
     const std::vector<std::unique_ptr<Team>>& getTeams() const;
 };
