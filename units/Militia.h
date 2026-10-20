@@ -6,7 +6,7 @@
 
 class Militia : public Unit {
   public:
-    Militia();
+    Militia(Position position);
 };
 
 #endif

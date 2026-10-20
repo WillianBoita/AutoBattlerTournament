@@ -29,7 +29,7 @@ class Unit {
   protected:
     Position position;
   public:
-    Unit(int health, int damage, int speed, int range, int price);
+    Unit(int health, int damage, int speed, int range, int price, Position position);
 
     int getId() const;
     int getHealth() const;

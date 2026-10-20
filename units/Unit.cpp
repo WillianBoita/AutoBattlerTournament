@@ -2,13 +2,14 @@
 #include "Unit.h"
 #include "../map/Map.h"
 
-Unit::Unit(int health, int damage, int speed, int range, int price) {
+Unit::Unit(int health, int damage, int speed, int range, int price, Position position) {
   this->id = this->counter++;
   this->health = health;
   this->damage = damage;
   this->speed = speed;
   this->range = range;
   this->price = price;
+  this->position = position;
 }
 
 int Unit::getId() const {

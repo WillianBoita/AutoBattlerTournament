@@ -12,7 +12,7 @@ Map::Map() {
 
 void Map::addTeam(int budget, std::vector<std::unique_ptr<Unit>> units) {
   std::unique_ptr<Team> newTeam = std::make_unique<Team>(budget);
-  for (int i = 0; i < units.size(); i++) {
+  for (long unsigned int i = 0; i < units.size(); i++) {
     newTeam->addUnit(std::move(units.at(i)));
   }
 
@@ -20,10 +20,34 @@ void Map::addTeam(int budget, std::vector<std::unique_ptr<Unit>> units) {
 }
 
 void Map::renderMap() {
+  const auto& teams = this->getTeams();
+  std::vector<Position> unitPositions;
+
+  for (const auto& team : teams) {
+    const auto& teamUnits = team->getUnits();
+    for (const auto& unit : teamUnits) {
+      unitPositions.push_back(unit->getPosition());
+    }
+  }
+  
+
   std::cout << "Rendering...\n";
   for (int i = 0; i < this->height; i++) {
     for (int j = 0; j < this->width; j++) {
-      std::cout << "[]";
+      bool flag = false;
+      for (const auto& pos : unitPositions) {
+        if (pos.x == j && pos.y == i) {
+          flag = true;
+          break;
+        }
+      }
+      
+      if (flag) {
+        std::cout << "[0]";
+      } else {
+        std::cout << "[-]";
+      }
+      
     }
     std::cout << "\n";
   }
@@ -31,14 +55,5 @@ void Map::renderMap() {
 }
 
 const std::vector<std::unique_ptr<Team>>& Map::getTeams() const {
-  for (int i = 0; i < this->teams.size(); i++) {
-    Team* team = this->teams.at(i).get();
-    
-    std::cout << "Team ID: " << team->getId() << "\n";
-    std::cout << "Team Budget: " << team->getBudget() << "\n";
-    team->getUnits();
-    std::cout << "-------------------\n";
-  }
-  
   return this->teams;
 }

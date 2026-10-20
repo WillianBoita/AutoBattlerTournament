@@ -7,8 +7,8 @@
 #ifndef Map_H
 #define Map_H
 
-const int max_height = 20;
-const int max_width = 20;
+const int max_height = 10;
+const int max_width = 10;
 
 class Map {
   private:
