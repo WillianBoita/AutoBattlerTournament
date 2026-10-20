@@ -6,7 +6,7 @@
 
 class Soldier : public Unit {
   public:
-    Soldier(int id, int health, int damage, int speed, int range, int price);
+    Soldier(int id);
 };
 
 #endif

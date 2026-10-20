@@ -24,8 +24,9 @@ int Team::getBudget() {
 const std::vector<std::unique_ptr<Unit>>& Team::getUnits() const {
   std::cout << "Units: \n";
   for (int i = 0; i < this->units.size(); i++) {
-    std::cout << this->units.at(i).get() << "\n";
     std::cout << this->units.at(i).get()->getId() << "\n";
+    std::cout << this->units.at(i).get()->getHealth() << "\n";
+    std::cout << this->units.at(i).get()->getDamage() << "\n";
   }
   return this->units;
 }

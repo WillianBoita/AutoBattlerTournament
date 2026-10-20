@@ -32,7 +32,6 @@ void Map::renderMap() {
 
 const std::vector<std::unique_ptr<Team>>& Map::getTeams() const {
   for (int i = 0; i < this->teams.size(); i++) {
-    std::cout << this->teams.at(i).get() << "\n";
     std::cout << this->teams.at(i).get()->getId() << "\n";
     std::cout << this->teams.at(i).get()->getBudget() << "\n";
     this->teams.at(i).get()->getUnits();
