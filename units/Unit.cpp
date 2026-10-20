@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Unit.h"
-#include "Map.h"
+#include "../map/Map.h"
 
 Unit::Unit(int id, int health, int damage, int speed, int range, int price) {
   this->id = id;
