@@ -1,19 +1,31 @@
 #include <iostream>
+#include <memory>
+
+#ifndef Unit_H
+#define Unit_H
 
 typedef struct {
   int x;
   int y;
 } Position;
 
+enum class Direction {
+  up = 1,
+  right = 2,
+  down = 3,
+  left = 4,
+  none = 5
+};
+
 class Unit {
   private:
     int id;
-    int teamId;
     int health;
     int damage;
     int speed;
     int range;
     int price;
+  protected:
     Position position;
   public:
     Unit(int id, int health, int damage, int speed, int range, int price);
@@ -24,9 +36,10 @@ class Unit {
     int getSpeed() const;
     int getRange() const;
     int getPrice() const;
+    Position getPosition() const;
 
-    void setTeamId(int teamId);
-
-    virtual void move(Position newPosition) = 0;
-    virtual void attack(Unit enemy) = 0;
+    void move(Direction direction);
+    void attack(std::unique_ptr<Unit> enemy);
 };
+
+#endif
