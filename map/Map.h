@@ -1,7 +1,5 @@
 #include <iostream>
-#include <vector>
 #include <memory>
-#include "../teams/Team.h"
 #include "../units/Unit.h"
 
 #ifndef Map_H
@@ -14,14 +12,12 @@ class Map {
   private:
     int height;
     int width;
-    std::vector<std::unique_ptr<Team>> teams;
+    std::array<std::array<std::shared_ptr<Unit>, max_width>, max_height> units;
   public:
     Map();
 
     void renderMap();
-    void addTeam(int budget, std::vector<std::unique_ptr<Unit>> units);
-
-    const std::vector<std::unique_ptr<Team>>& getTeams() const;
+    void addUnit(int budget, std::unique_ptr<Unit> unit);
 };
 
 #endif

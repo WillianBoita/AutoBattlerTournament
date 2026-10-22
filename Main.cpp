@@ -31,11 +31,6 @@ int main() {
     std::unique_ptr<Artillery> unit2 = std::make_unique<Artillery>(enemySpawnPosition);
     units2.push_back(std::move(unit2)); 
   }
-  
-  mapa->addTeam(200, std::move(units));
-  mapa->addTeam(200, std::move(units2));
-
-  mapa->getTeams();
 
   mapa->renderMap();
   return 0;
