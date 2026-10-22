@@ -16,6 +16,10 @@ int Unit::getId() const {
   return this->id;
 }
 
+int Unit::getTeamId() const {
+  return this->teamId;
+}
+
 int Unit::getHealth() const {
   return this->health;
 }
@@ -89,4 +93,8 @@ void Unit::attack(std::unique_ptr<Unit> enemy) {
   if (abs(enemyPosition.x - this->getPosition().x) <= this->getRange() || abs(enemyPosition.y - this->getPosition().y) <= this->getRange()) {
     enemy.get()->health -= this->getDamage();
   }
+}
+
+void Unit::setTeamId(int teamId) {
+  this->teamId = teamId;
 }

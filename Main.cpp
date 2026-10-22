@@ -13,7 +13,8 @@ int main() {
   std::unique_ptr<Map> mapa = std::make_unique<Map>();
   std::vector<std::unique_ptr<Unit>> units;
   std::vector<std::unique_ptr<Unit>> units2;
-  int unitNum = 5;
+  int n = 5;
+  int unitNum = n > max_height ? max_height : n;
   for (int i = 0; i < unitNum; i++) {
     int ySpawnPosition = (max_height / 2) - (unitNum / 2) + i;
     Position spawnPosition;

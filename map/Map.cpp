@@ -13,6 +13,7 @@ Map::Map() {
 void Map::addTeam(int budget, std::vector<std::unique_ptr<Unit>> units) {
   std::unique_ptr<Team> newTeam = std::make_unique<Team>(budget);
   for (long unsigned int i = 0; i < units.size(); i++) {
+    units.at(i).get()->setTeamId(newTeam.get()->getId());
     newTeam->addUnit(std::move(units.at(i)));
   }
 
