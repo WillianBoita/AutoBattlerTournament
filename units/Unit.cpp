@@ -2,15 +2,15 @@
 #include "Unit.h"
 #include "../map/Map.h"
 
-Unit::Unit(int health, int damage, int speed, int range, int price, Position position) {
-  this->id = this->counter++;
-  this->health = health;
-  this->damage = damage;
-  this->speed = speed;
-  this->range = range;
-  this->price = price;
-  this->position = position;
-}
+Unit::Unit(int health, int damage, int speed, int range, int price, Position position, int unitType) : 
+  id(this->counter++),
+  health(health),
+  damage(damage),
+  speed(speed),
+  range(range),
+  price(price),
+  unitType(unitType) ,
+  position(position) {}
 
 int Unit::getId() const {
   return this->id;
@@ -42,6 +42,10 @@ int Unit::getPrice() const {
 
 Position Unit::getPosition() const {
   return this->position;
+}
+
+int Unit::getUnitType() const {
+  return this->unitType;
 }
 
 void Unit::move(Direction direction) {
@@ -88,10 +92,10 @@ void Unit::move(Direction direction) {
   }
 }
 
-void Unit::attack(std::unique_ptr<Unit> enemy) {
-  Position enemyPosition = enemy.get()->getPosition();
+void Unit::attack(std::shared_ptr<Unit> enemy) {
+  Position enemyPosition = enemy->getPosition();
   if (abs(enemyPosition.x - this->getPosition().x) <= this->getRange() || abs(enemyPosition.y - this->getPosition().y) <= this->getRange()) {
-    enemy.get()->health -= this->getDamage();
+    enemy->health -= this->getDamage();
   }
 }
 

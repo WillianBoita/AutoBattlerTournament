@@ -1,60 +1,72 @@
 #include <iostream>
-#include <vector>
 #include <memory>
 #include "Map.h"
-#include "../teams/Team.h"
 #include "../units/Unit.h"
 
-Map::Map() {
-  this->height = max_height;
-  this->width = max_width;
-}
-
-void Map::addTeam(int budget, std::vector<std::unique_ptr<Unit>> units) {
-  std::unique_ptr<Team> newTeam = std::make_unique<Team>(budget);
-  for (long unsigned int i = 0; i < units.size(); i++) {
-    units.at(i).get()->setTeamId(newTeam.get()->getId());
-    newTeam->addUnit(std::move(units.at(i)));
+Map::Map() : height(max_height), width(max_width) {
+  for (int i = 0; i < max_height; i++) {
+    this->grid.at(i).fill(nullptr);
   }
-
-  this->teams.push_back(std::move(newTeam));
 }
 
 void Map::renderMap() {
-  const auto& teams = this->getTeams();
-  std::vector<Position> unitPositions;
-
-  for (const auto& team : teams) {
-    const auto& teamUnits = team->getUnits();
-    for (const auto& unit : teamUnits) {
-      unitPositions.push_back(unit->getPosition());
-    }
-  }
-  
-
   std::cout << "Rendering...\n";
   for (int i = 0; i < this->height; i++) {
     for (int j = 0; j < this->width; j++) {
-      bool flag = false;
-      for (const auto& pos : unitPositions) {
-        if (pos.x == j && pos.y == i) {
-          flag = true;
-          break;
-        }
-      }
-      
-      if (flag) {
-        std::cout << "[0]";
+      std::shared_ptr<Unit> unit = grid.at(i).at(j);
+      if (unit != nullptr) {
+        std::cout << "[" << unit->getId() << "]";
       } else {
         std::cout << "[-]";
       }
-      
     }
     std::cout << "\n";
   }
-  
 }
 
-const std::vector<std::unique_ptr<Team>>& Map::getTeams() const {
-  return this->teams;
+void Map::addUnit(std::unique_ptr<Unit> unit) {
+  Position unitSpawnPosition = unit->getPosition();
+  this->grid.at(unitSpawnPosition.y).at(unitSpawnPosition.x) = std::move(unit);
+}
+
+void Map::isEnemyInRange(std::shared_ptr<Unit> unit) {
+  Position currentPosition = unit->getPosition();
+  int unitRange = unit->getRange();
+
+  for (int i = -unitRange; i <= unitRange; i++) {
+    for (int j = -unitRange; j <= unitRange; j++) {
+      if (i == 0 && j == 0) {
+        continue;
+      }
+
+      int x = currentPosition.x + j;
+      int y = currentPosition.y + i;
+
+      if (x < 0 || x >= max_width ||
+          y < 0 || y >= max_height) {
+          continue;
+      }
+
+      std::shared_ptr<Unit> foundEnemy = this->grid.at(y).at(x);
+      if (foundEnemy != nullptr && unit->getTeamId() != foundEnemy->getTeamId()) {
+        unit->attack(foundEnemy);
+        std::cout << unit->getId() << " Atingiu " << foundEnemy->getId() << "\n";
+        std::cout << "Unit " << foundEnemy->getId() << " Vida restante: " << foundEnemy->getHealth() << "\n";
+        return;
+      }
+    }
+  }
+  
+  std::cout << unit->getId() << " não encontrou nenhum inimigo.\n";
+}
+
+void Map::simulateTurn() {
+  for (int i = 0; i < this->height; i++) {
+    for (int j = 0; j < this->width; j++) {
+      std::shared_ptr<Unit> unit = grid.at(i).at(j);
+      if (unit != nullptr) {
+        this->isEnemyInRange(unit);
+      }
+    }
+  }
 }
