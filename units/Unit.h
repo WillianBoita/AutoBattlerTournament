@@ -51,7 +51,7 @@ class Unit {
     int getUnitType() const;
 
     void move(Direction direction);
-    void attack(std::shared_ptr<Unit> enemy);
+    void attack(Unit* enemy);
     void setTeamId(int teamId);
 };
 

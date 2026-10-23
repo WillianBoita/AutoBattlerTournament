@@ -19,7 +19,7 @@ int main() {
     int ySpawnPosition = (max_height / 2) - (unitNum / 2) + i;
     Position spawnPosition;
 
-    spawnPosition.x = 3;
+    spawnPosition.x = 7;
     spawnPosition.y = ySpawnPosition;
     std::unique_ptr<Tank> unit = std::make_unique<Tank>(spawnPosition);
     unit->setTeamId(team1->getId());
@@ -35,6 +35,9 @@ int main() {
   }
 
   mapa->renderMap();
-  mapa->simulateTurn();
+  for (int i = 0; i < 5; i++) {
+    mapa->simulateTurn();
+  }
+  
   return 0;
 }

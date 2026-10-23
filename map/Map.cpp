@@ -1,21 +1,18 @@
 #include <iostream>
+#include <vector>
 #include <memory>
 #include "Map.h"
 #include "../units/Unit.h"
 
-Map::Map() : height(max_height), width(max_width) {
-  for (int i = 0; i < max_height; i++) {
-    this->grid.at(i).fill(nullptr);
-  }
-}
+Map::Map() : height(max_height), width(max_width), isRunning(true) {}
 
 void Map::renderMap() {
   std::cout << "Rendering...\n";
   for (int i = 0; i < this->height; i++) {
     for (int j = 0; j < this->width; j++) {
-      std::shared_ptr<Unit> unit = grid.at(i).at(j);
+      Unit* unit = grid.at(i).at(j).get();
       if (unit != nullptr) {
-        std::cout << "[" << unit->getId() << "]";
+        std::cout << "[" << unit->getId() << "]";  
       } else {
         std::cout << "[-]";
       }
@@ -29,7 +26,7 @@ void Map::addUnit(std::unique_ptr<Unit> unit) {
   this->grid.at(unitSpawnPosition.y).at(unitSpawnPosition.x) = std::move(unit);
 }
 
-void Map::isEnemyInRange(std::shared_ptr<Unit> unit) {
+void Map::isEnemyInRange(Unit* unit) {
   Position currentPosition = unit->getPosition();
   int unitRange = unit->getRange();
 
@@ -47,26 +44,27 @@ void Map::isEnemyInRange(std::shared_ptr<Unit> unit) {
           continue;
       }
 
-      std::shared_ptr<Unit> foundEnemy = this->grid.at(y).at(x);
+      Unit* foundEnemy = this->grid.at(y).at(x).get();
       if (foundEnemy != nullptr && unit->getTeamId() != foundEnemy->getTeamId()) {
         unit->attack(foundEnemy);
-        std::cout << unit->getId() << " Atingiu " << foundEnemy->getId() << "\n";
-        std::cout << "Unit " << foundEnemy->getId() << " Vida restante: " << foundEnemy->getHealth() << "\n";
+        if (foundEnemy->getHealth() <= 0) {
+          grid.at(y).at(x).reset();
+        }
         return;
       }
     }
   }
-  
-  std::cout << unit->getId() << " não encontrou nenhum inimigo.\n";
 }
 
 void Map::simulateTurn() {
   for (int i = 0; i < this->height; i++) {
     for (int j = 0; j < this->width; j++) {
-      std::shared_ptr<Unit> unit = grid.at(i).at(j);
+      Unit* unit = grid.at(i).at(j).get();
       if (unit != nullptr) {
         this->isEnemyInRange(unit);
       }
     }
   }
+
+  this->renderMap();
 }

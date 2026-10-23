@@ -52,8 +52,8 @@ void Unit::move(Direction direction) {
   switch (direction) {
 
   case Direction::up:
-    if (this->position.y + this->getSpeed() >= max_height) {
-      this->position.y = max_height;
+    if (this->position.y + this->getSpeed() >= max_height - 1) {
+      this->position.y = max_height - 1;
       return;
     }
     
@@ -61,8 +61,8 @@ void Unit::move(Direction direction) {
     break;
   
   case Direction::right:
-    if (this->position.x + this->getSpeed() >= max_width) {
-      this->position.x = max_width;
+    if (this->position.x + this->getSpeed() >= max_width - 1) {
+      this->position.x = max_width - 1;
       return;
     }
 
@@ -92,11 +92,8 @@ void Unit::move(Direction direction) {
   }
 }
 
-void Unit::attack(std::shared_ptr<Unit> enemy) {
-  Position enemyPosition = enemy->getPosition();
-  if (abs(enemyPosition.x - this->getPosition().x) <= this->getRange() || abs(enemyPosition.y - this->getPosition().y) <= this->getRange()) {
-    enemy->health -= this->getDamage();
-  }
+void Unit::attack(Unit* enemy) {
+  enemy->health -= this->getDamage();
 }
 
 void Unit::setTeamId(int teamId) {
