@@ -11,15 +11,18 @@
 
 int main() {
   std::unique_ptr<Map> mapa = std::make_unique<Map>();
+  std::unique_ptr<Team> team1 = std::make_unique<Team>(100);
+  std::unique_ptr<Team> team2 = std::make_unique<Team>(100);
   int n = 5;
   int unitNum = n > max_height ? max_height : n;
   for (int i = 0; i < unitNum; i++) {
     int ySpawnPosition = (max_height / 2) - (unitNum / 2) + i;
     Position spawnPosition;
 
-    spawnPosition.x = 6;
+    spawnPosition.x = 3;
     spawnPosition.y = ySpawnPosition;
     std::unique_ptr<Tank> unit = std::make_unique<Tank>(spawnPosition);
+    unit->setTeamId(team1->getId());
     mapa->addUnit(std::move(unit));
 
     Position enemySpawnPosition;
@@ -27,9 +30,11 @@ int main() {
     enemySpawnPosition.x = max_width - 1;
     enemySpawnPosition.y = ySpawnPosition;
     std::unique_ptr<Artillery> unit2 = std::make_unique<Artillery>(enemySpawnPosition);
+    unit2->setTeamId(team2->getId());
     mapa->addUnit(std::move(unit2)); 
   }
 
   mapa->renderMap();
+  mapa->simulateTurn();
   return 0;
 }

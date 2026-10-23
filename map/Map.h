@@ -18,7 +18,8 @@ class Map {
 
     void renderMap();
     void addUnit(std::unique_ptr<Unit> unit);
-    void isEnemyInRange();
+    void isEnemyInRange(std::shared_ptr<Unit> unit);
+    void simulateTurn();
 };
 
 #endif
