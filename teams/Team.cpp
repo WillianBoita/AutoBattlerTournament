@@ -12,3 +12,15 @@ int Team::getId() {
 int Team::getBudget() {
   return this->budget;
 }
+
+int Team::getUnits() {
+  return this->units.size();
+}
+
+void Team::addUnit(std::shared_ptr<Unit> unit) {
+  this->units.push_back(unit);
+}
+
+void Team::removeUnit() {
+  this->units.pop_back();
+}

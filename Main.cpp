@@ -13,6 +13,7 @@ int main() {
   std::unique_ptr<Map> mapa = std::make_unique<Map>();
   std::unique_ptr<Team> team1 = std::make_unique<Team>(100);
   std::unique_ptr<Team> team2 = std::make_unique<Team>(100);
+
   int n = 5;
   int unitNum = n > max_height ? max_height : n;
   for (int i = 0; i < unitNum; i++) {
@@ -21,21 +22,26 @@ int main() {
 
     spawnPosition.x = 7;
     spawnPosition.y = ySpawnPosition;
-    std::unique_ptr<Tank> unit = std::make_unique<Tank>(spawnPosition);
+    std::shared_ptr<Tank> unit = std::make_unique<Tank>(spawnPosition);
     unit->setTeamId(team1->getId());
     mapa->addUnit(std::move(unit));
+    team1->addUnit(unit);
 
     Position enemySpawnPosition;
 
     enemySpawnPosition.x = max_width - 1;
     enemySpawnPosition.y = ySpawnPosition;
-    std::unique_ptr<Artillery> unit2 = std::make_unique<Artillery>(enemySpawnPosition);
+    std::shared_ptr<Artillery> unit2 = std::make_unique<Artillery>(enemySpawnPosition);
     unit2->setTeamId(team2->getId());
-    mapa->addUnit(std::move(unit2)); 
+    mapa->addUnit(std::move(unit2));
+    team2->addUnit(unit2);
   }
 
+  mapa->addTeam(std::move(team1));
+  mapa->addTeam(std::move(team2));
+
   mapa->renderMap();
-  for (int i = 0; i < 5; i++) {
+  while(mapa->getIsRunning()) {
     mapa->simulateTurn();
   }
   
