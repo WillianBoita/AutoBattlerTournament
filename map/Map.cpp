@@ -11,7 +11,7 @@ void Map::renderMap() {
     for (int x = 0; x < this->width; x++) {
       Unit* unit = grid.at(y).at(x).get();
       if (unit != nullptr) {
-        std::cout << "[" << unit->getUnitType() << "-" << unit->getId() << "]";  
+        std::cout << "[" << unit->getUnitType() << "-" << unit->getHealth() << "]";  
       } else {
         std::cout << "[---]";
       }
@@ -47,8 +47,8 @@ bool Map::isEnemyInRange(Unit* unit, Position currentPosition) {
         continue;
       }
 
-      int x = currentPosition.x + i;
-      int y = currentPosition.y + j;
+      int x = currentPosition.x + j;
+      int y = currentPosition.y + i;
 
       if (x < 0 || x >= max_width ||
           y < 0 || y >= max_height) {

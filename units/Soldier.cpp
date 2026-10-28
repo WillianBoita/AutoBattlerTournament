@@ -2,4 +2,4 @@
 #include "Unit.h"
 #include "Soldier.h"
 
-Soldier::Soldier() : Unit(100, 10, 1, 1, 15, static_cast<int>(UnitType::Soldier)) {}
+Soldier::Soldier() : Unit(50, 10, 1, 1, 10, static_cast<int>(UnitType::Soldier)) {}
