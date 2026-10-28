@@ -11,9 +11,9 @@ void Map::renderMap() {
     for (int x = 0; x < this->width; x++) {
       Unit* unit = grid.at(y).at(x).get();
       if (unit != nullptr) {
-        std::cout << "[" << unit->getId() << "]";  
+        std::cout << "[" << unit->getUnitType() << "-" << unit->getId() << "]";  
       } else {
-        std::cout << "[-]";
+        std::cout << "[---]";
       }
     }
     std::cout << "\n";
