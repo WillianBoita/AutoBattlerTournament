@@ -39,15 +39,8 @@ int main() {
   mapa->addTeam(team2);
 
   mapa->renderMap();
-  int contador = 0;
   while(mapa->getIsRunning()) {
     mapa->simulateTurn();
-    contador++;
-
-    if (contador > 10) {
-      break;
-    }
-    
   }
   
   return 0;
