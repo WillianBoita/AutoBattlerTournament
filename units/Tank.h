@@ -6,7 +6,7 @@
 
 class Tank : public Unit {
   public:
-    Tank(Position position);
+    Tank();
 };
 
 #endif

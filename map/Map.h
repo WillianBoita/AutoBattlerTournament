@@ -15,17 +15,18 @@ class Map {
     int height;
     int width;
     std::array<std::array<std::shared_ptr<Unit>, max_width>, max_height> grid;
-    std::vector<std::unique_ptr<Team>> teams;
+    std::vector<std::shared_ptr<Team>> teams;
     bool isRunning;
   public:
     Map();
 
     int getIsRunning();
 
-    void addUnit(std::shared_ptr<Unit> unit);
-    void addTeam(std::unique_ptr<Team> team);
+    void addUnit(std::shared_ptr<Unit> unit, Position unitSpawnPosition);
+    void addTeam(std::shared_ptr<Team> team);
 
-    void isEnemyInRange(Unit* unit);
+    void updateUnitPositions(Unit* unit, Position currentPosition);
+    bool isEnemyInRange(Unit* unit, Position currentPosition);
 
     void renderMap();
     void simulateTurn();

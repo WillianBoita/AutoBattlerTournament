@@ -15,9 +15,10 @@ class Team {
   public:
     Team(int budget);
 
-    int getId();
-    int getBudget();
-    int getUnits();
+    int getId() const;
+    int getBudget() const;
+    int getUnitQuantity() const;
+    std::vector<std::shared_ptr<Unit>> getUnits();
 
     void addUnit(std::shared_ptr<Unit> unit);
     void removeUnit();

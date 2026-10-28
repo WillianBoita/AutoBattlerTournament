@@ -9,14 +9,6 @@ typedef struct {
   int y;
 } Position;
 
-enum class Direction {
-  up = 1,
-  right = 2,
-  down = 3,
-  left = 4,
-  none = 5
-};
-
 enum class UnitType {
   Soldier = 1,
   Militia = 2,
@@ -35,10 +27,8 @@ class Unit {
     int range;
     int price;
     int unitType;
-  protected:
-    Position position;
   public:
-    Unit(int health, int damage, int speed, int range, int price, Position position, int unitType);
+    Unit(int health, int damage, int speed, int range, int price, int unitType);
 
     int getId() const;
     int getTeamId() const;
@@ -47,10 +37,8 @@ class Unit {
     int getSpeed() const;
     int getRange() const;
     int getPrice() const;
-    Position getPosition() const;
     int getUnitType() const;
 
-    void move(Direction direction);
     void attack(Unit* enemy);
     void setTeamId(int teamId);
 };

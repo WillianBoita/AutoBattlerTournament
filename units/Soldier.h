@@ -6,7 +6,7 @@
 
 class Soldier : public Unit {
   public:
-    Soldier(Position position);
+    Soldier();
 };
 
 #endif

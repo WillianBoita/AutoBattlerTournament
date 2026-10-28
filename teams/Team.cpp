@@ -5,16 +5,20 @@ Team::Team(int budget) :
   id(this->counter++),
   budget(budget) {}
 
-int Team::getId() {
+int Team::getId() const {
   return this->id;
 }
 
-int Team::getBudget() {
+int Team::getBudget() const {
   return this->budget;
 }
 
-int Team::getUnits() {
+int Team::getUnitQuantity() const {
   return this->units.size();
+}
+
+std::vector<std::shared_ptr<Unit>> Team::getUnits() {
+  return this->units;
 }
 
 void Team::addUnit(std::shared_ptr<Unit> unit) {
