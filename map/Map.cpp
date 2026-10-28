@@ -91,7 +91,7 @@ void Map::simulateTurn() {
 }
 
 void Map::isMapRunning() {
-  for (long unsigned int i = 0; i < this->teams.size() - 1; i++) {
+  for (long unsigned int i = 0; i < this->teams.size(); i++) {
     Team* team = this->teams.at(i).get();
     if (team->getUnitQuantity() <= 0) {
       this->isRunning = false;
